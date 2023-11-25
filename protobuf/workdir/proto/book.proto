@@ -1,0 +1,26 @@
+syntax = "proto3";
+package tsuyoyo.protobuf.demo;
+
+enum Genre {
+  UNKNOWN = 0;
+  SCIENCE = 1;
+  FANTASY = 2;
+  MYSTERY = 3;
+}
+
+message Author {
+  int32 id = 1;
+  string name = 2;
+  string penName = 3;
+}
+
+message Book {
+  int32 id = 1;
+  string title = 2;
+  Author author = 3;
+  Genre genre = 4;
+}
+
+message GetBooksResponse {
+  repeated Book books = 1;
+}

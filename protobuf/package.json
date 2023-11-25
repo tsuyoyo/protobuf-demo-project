@@ -1,0 +1,14 @@
+{
+    "name": "proto-demo-proto",
+    "version": "1.0.0",
+    "description": "",
+    "main": "workdir/proto_out/pbjs/compiled.js",
+    "types": "workdir/proto_out/pbjs/compiled.d.ts",
+    "private": true,
+    "scripts": {},
+    "dependencies": {
+        "fs": "0.0.1-security"
+    },
+    "author": "Tsuyoshi Yoshioka",
+    "license": "GNUGPL"
+}

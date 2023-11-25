@@ -1,0 +1,40 @@
+version: '2'
+services:
+  generate-proto:
+    # Neccesary for M1 Mac
+    # https://stackoverflow.com/questions/68630526/lib64-ld-linux-x86-64-so-2-no-such-file-or-directory-error
+    platform: linux/x86_64
+
+    container_name: example-ruby-proto-generator
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: >
+      sh -c "
+        echo 'Generate Ruby proto files'
+        rm -rf ./proto_out/ruby
+        mkdir -p ./proto_out/ruby
+        protoc --proto_path=./ --ruby_out=./proto_out/ruby ./proto/*
+      "
+    volumes:
+      - ./workdir/:/usr/src/app
+  generate-proto-kotlin:
+    # Neccesary for M1 Mac
+    # https://stackoverflow.com/questions/68630526/lib64-ld-linux-x86-64-so-2-no-such-file-or-directory-error
+    platform: linux/x86_64
+
+    container_name: example-kotlin-proto-generator
+    build:
+      context: .
+      dockerfile: ./Dockerfile_Java
+    # NOTE: Must align wire-compiler version with lib version used in application
+    # (Android uses com.squareup.wire:wire-gradle-plugin:4.5.2)
+    command: >
+      sh -c "
+        echo 'Generate Kotlin proto files'
+        rm -rf ./proto_out/kotlin
+        mkdir -p ./proto_out/kotlin
+        java -jar wire-compiler-4.5.2-jar-with-dependencies.jar --android --proto_path=./proto/ --kotlin_out=./proto_out/kotlin
+      "
+    volumes:
+      - ./workdir/:/usr/src/app
